@@ -1,0 +1,8 @@
+{
+  "name": "NABIOSOS HUB",
+  "description": "The official digital community and academic network for the National Association of Biological Sciences Students at Federal University Wukari.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -1,0 +1,273 @@
+{
+  "entities": {
+    "userProfile": {
+      "title": "UserProfile",
+      "description": "Public academic profile for NABIOSOS students at Federal University Wukari",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 256 },
+        "displayName": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "department": { "type": "string", "maxLength": 60 },
+        "level": { "type": "string", "maxLength": 30 },
+        "bio": { "type": "string", "maxLength": 300 },
+        "avatarColor": { "type": "string", "maxLength": 30 },
+        "createdAt": { "type": "string", "maxLength": 64 },
+        "updatedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "email", "displayName", "department", "level"]
+    },
+    "friendRequest": {
+      "title": "FriendRequest",
+      "description": "Peer connection invitation between students",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "senderId": { "type": "string", "maxLength": 128 },
+        "senderName": { "type": "string", "maxLength": 80 },
+        "senderDepartment": { "type": "string", "maxLength": 60 },
+        "senderLevel": { "type": "string", "maxLength": 30 },
+        "receiverId": { "type": "string", "maxLength": 128 },
+        "status": { "type": "string", "enum": ["pending", "accepted", "declined"] },
+        "createdAt": { "type": "string", "maxLength": 64 },
+        "updatedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "senderId", "senderName", "receiverId", "status"]
+    },
+    "friendship": {
+      "title": "Friendship",
+      "description": "Established friendship record allowing private communication",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "user1Id": { "type": "string", "maxLength": 128 },
+        "user2Id": { "type": "string", "maxLength": 128 },
+        "users": { "type": "array", "description": "Array of participant UIDs" },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "user1Id", "user2Id", "users"]
+    },
+    "privateChat": {
+      "title": "PrivateChat",
+      "description": "1-on-1 private conversation thread between connected friends",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "participants": { "type": "array", "description": "Array of both participant UIDs" },
+        "lastMessage": { "type": "string", "maxLength": 1000 },
+        "lastSenderId": { "type": "string", "maxLength": 128 },
+        "lastSenderName": { "type": "string", "maxLength": 80 },
+        "createdAt": { "type": "string", "maxLength": 64 },
+        "updatedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "participants"]
+    },
+    "privateMessage": {
+      "title": "PrivateMessage",
+      "description": "Individual direct message inside a private chat",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "chatId": { "type": "string", "maxLength": 128 },
+        "senderId": { "type": "string", "maxLength": 128 },
+        "senderName": { "type": "string", "maxLength": 80 },
+        "text": { "type": "string", "minLength": 1, "maxLength": 2000 },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "chatId", "senderId", "senderName", "text"]
+    },
+    "spaceMessage": {
+      "title": "SpaceMessage",
+      "description": "Departmental space message or discussion post",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "spaceId": { "type": "string", "maxLength": 80 },
+        "senderId": { "type": "string", "maxLength": 128 },
+        "senderName": { "type": "string", "maxLength": 80 },
+        "senderDepartment": { "type": "string", "maxLength": 60 },
+        "senderLevel": { "type": "string", "maxLength": 30 },
+        "text": { "type": "string", "minLength": 1, "maxLength": 3000 },
+        "attachmentType": { "type": "string", "maxLength": 40 },
+        "attachmentTitle": { "type": "string", "maxLength": 120 },
+        "likesCount": { "type": "number" },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "spaceId", "senderId", "senderName", "text"]
+    },
+    "marketItem": {
+      "title": "MarketItem",
+      "description": "Student peer-to-peer campus marketplace listing",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "minLength": 3, "maxLength": 120 },
+        "description": { "type": "string", "minLength": 5, "maxLength": 1500 },
+        "price": { "type": "number" },
+        "category": { "type": "string", "maxLength": 50 },
+        "sellerId": { "type": "string", "maxLength": 128 },
+        "sellerName": { "type": "string", "maxLength": 80 },
+        "sellerDepartment": { "type": "string", "maxLength": 60 },
+        "sellerLevel": { "type": "string", "maxLength": 30 },
+        "sellerContact": { "type": "string", "maxLength": 100 },
+        "status": { "type": "string", "enum": ["active", "sold"] },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "title", "description", "price", "category", "sellerId", "sellerName", "status"]
+    },
+    "announcement": {
+      "title": "Announcement",
+      "description": "NABIOSOS departmental notice and official university circular",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "minLength": 3, "maxLength": 150 },
+        "content": { "type": "string", "minLength": 5, "maxLength": 4000 },
+        "tag": { "type": "string", "maxLength": 50 },
+        "authorId": { "type": "string", "maxLength": 128 },
+        "authorName": { "type": "string", "maxLength": 80 },
+        "priority": { "type": "string", "enum": ["high", "normal"] },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "title", "content", "authorId", "authorName"]
+    },
+    "sportsUpdate": {
+      "title": "SportsUpdate",
+      "description": "Campus inter-departmental and national sports news, match fixtures, and results",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "minLength": 3, "maxLength": 150 },
+        "category": { "type": "string", "maxLength": 50 },
+        "content": { "type": "string", "maxLength": 3000 },
+        "homeTeam": { "type": "string", "maxLength": 60 },
+        "awayTeam": { "type": "string", "maxLength": 60 },
+        "homeScore": { "type": "number" },
+        "awayScore": { "type": "number" },
+        "status": { "type": "string", "enum": ["upcoming", "live", "finished", "news"] },
+        "matchTime": { "type": "string", "maxLength": 64 },
+        "venue": { "type": "string", "maxLength": 100 },
+        "competition": { "type": "string", "maxLength": 80 },
+        "authorName": { "type": "string", "maxLength": 80 },
+        "authorId": { "type": "string", "maxLength": 128 },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "title", "status", "category"]
+    },
+    "footballAnnouncement": {
+      "title": "FootballAnnouncement",
+      "description": "Official football matches, lineups, scores, and venue posted by course reps",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "minLength": 3, "maxLength": 150 },
+        "matchDate": { "type": "string", "maxLength": 64 },
+        "matchTime": { "type": "string", "maxLength": 64 },
+        "venue": { "type": "string", "maxLength": 100 },
+        "homeTeam": { "type": "string", "maxLength": 80 },
+        "awayTeam": { "type": "string", "maxLength": 80 },
+        "homeScore": { "type": "number" },
+        "awayScore": { "type": "number" },
+        "homeLineup": { "type": "string", "maxLength": 1500 },
+        "awayLineup": { "type": "string", "maxLength": 1500 },
+        "posterImage": { "type": "string", "maxLength": 500 },
+        "status": { "type": "string", "enum": ["upcoming", "live", "finished"] },
+        "authorId": { "type": "string", "maxLength": 128 },
+        "authorName": { "type": "string", "maxLength": 80 },
+        "authorRole": { "type": "string", "maxLength": 80 },
+        "likesCount": { "type": "number" },
+        "reactions": { "type": "object" },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "title", "matchDate", "matchTime", "venue", "homeTeam", "awayTeam", "status"]
+    },
+    "footballComment": {
+      "title": "FootballComment",
+      "description": "Real-time conversation comment under football announcements",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "announcementId": { "type": "string", "maxLength": 128 },
+        "parentCommentId": { "type": "string", "maxLength": 128 },
+        "text": { "type": "string", "minLength": 1, "maxLength": 2000 },
+        "authorId": { "type": "string", "maxLength": 128 },
+        "authorName": { "type": "string", "maxLength": 80 },
+        "authorDepartment": { "type": "string", "maxLength": 60 },
+        "authorLevel": { "type": "string", "maxLength": 30 },
+        "likesCount": { "type": "number" },
+        "likedBy": { "type": "array" },
+        "reactions": { "type": "object" },
+        "isPinned": { "type": "boolean" },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "announcementId", "text", "authorId", "authorName", "authorDepartment", "authorLevel"]
+    },
+    "matchLiveMessage": {
+      "title": "MatchLiveMessage",
+      "description": "Instant live commentary message inside a live match room",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "matchId": { "type": "string", "maxLength": 128 },
+        "senderId": { "type": "string", "maxLength": 128 },
+        "senderName": { "type": "string", "maxLength": 80 },
+        "senderDepartment": { "type": "string", "maxLength": 60 },
+        "senderLevel": { "type": "string", "maxLength": 30 },
+        "text": { "type": "string", "minLength": 1, "maxLength": 2000 },
+        "type": { "type": "string", "enum": ["chat", "goal", "foul", "card", "sub"] },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "matchId", "senderId", "senderName", "text"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "userProfile" },
+      "description": "Public profile of student at Federal University Wukari"
+    },
+    "/friendRequests/{requestId}": {
+      "schema": { "$ref": "friendRequest" },
+      "description": "Incoming and outgoing friend requests"
+    },
+    "/friendships/{friendshipId}": {
+      "schema": { "$ref": "friendship" },
+      "description": "Established friendships"
+    },
+    "/privateChats/{chatId}": {
+      "schema": { "$ref": "privateChat" },
+      "description": "Direct private conversation metadata"
+    },
+    "/privateChats/{chatId}/messages/{messageId}": {
+      "schema": { "$ref": "privateMessage" },
+      "description": "Private messages exchanged between connected friends"
+    },
+    "/spaces/{spaceId}/messages/{messageId}": {
+      "schema": { "$ref": "spaceMessage" },
+      "description": "Departmental space chat messages"
+    },
+    "/marketItems/{itemId}": {
+      "schema": { "$ref": "marketItem" },
+      "description": "NABIOSOS student market items"
+    },
+    "/announcements/{announcementId}": {
+      "schema": { "$ref": "announcement" },
+      "description": "Official announcements & departmental memos"
+    },
+    "/sportsUpdates/{updateId}": {
+      "schema": { "$ref": "sportsUpdate" },
+      "description": "Football news, fixtures, results, and university sports bulletins"
+    },
+    "/footballAnnouncements/{announcementId}": {
+      "schema": { "$ref": "footballAnnouncement" },
+      "description": "Football matches, lineups, scores, and venue bulletins"
+    },
+    "/footballComments/{commentId}": {
+      "schema": { "$ref": "footballComment" },
+      "description": "Real-time conversation comments and replies under football announcements"
+    },
+    "/matchLiveChats/{matchId}/messages/{messageId}": {
+      "schema": { "$ref": "matchLiveMessage" },
+      "description": "Real-time live commentary and messages inside match live chat room"
+    }
+  }
+}
